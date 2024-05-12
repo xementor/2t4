@@ -6,7 +6,7 @@ export default {
   driver: 'd1',
   dbCredentials: {
     wranglerConfigPath: 'wrangler.toml',
-    dbName: 'production',
+    dbName: '2t4',
   },
   verbose: false,
   strict: true,
