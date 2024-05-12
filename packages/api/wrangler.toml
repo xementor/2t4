@@ -1,4 +1,4 @@
-name = "t4-api"
+name = "2t4-api"
 compatibility_date = "2023-10-30"
 send_metrics = false
 node_compat = true
@@ -7,8 +7,8 @@ account_id = "9463e85412a8e555d34181d70b2e22ce"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "2t4"
-database_id = "3c414e12-cd46-4cc6-84d8-affed3147b2e"
+database_name = "production"
+database_id = "ab07a21c-e5df-472a-b621-aaf2ea8c5168"
 migrations_dir = "migrations"
 
 # The necessary secrets are:
