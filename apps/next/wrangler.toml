@@ -1,8 +1,8 @@
-name = "t4-stack"
+name = "2t4"
 compatibility_date = "2023-10-30"
 send_metrics = false
 node_compat = true
-route = "app.t4stack.com/*"
+route = "https://2t4.pages.dev/*"
 workers_dev = false
 
 [env.preview]
