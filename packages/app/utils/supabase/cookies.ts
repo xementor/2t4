@@ -13,9 +13,13 @@ export function getCookieValue(cookieName: string): string | undefined {
       cookie = cookie.substring(1)
     }
 
-    if (cookie?.indexOf(cookieName) === 0) {
-      const cookieValue = cookie.replace('-code-verifier', '').substring(cookieNameLength + 1)
-      return decodeURIComponent(cookieValue)
+    if (cookie) {
+      const [key, value] = cookie.split('=')
+      if (key && value) {
+      if(key === cookieName) {
+        return decodeURIComponent(value)
+      }
+      }
     }
   }
 
@@ -33,7 +37,10 @@ export const secureCookieOptions = {
 }
 
 export const getToken = (): string | undefined => {
+  // console.log('get Token', document.cookie)
+  console.log(DEFAULT_COOKIE_OPTIONS, 'vong cong')
   let token = getCookieValue(AUTH_TOKEN_COOKIE_NAME)
+  console.log(token, token)
   if (token !== undefined) {
     const parse = JSON.parse(token)
     if (Array.isArray(parse) && parse.length > 0) {
