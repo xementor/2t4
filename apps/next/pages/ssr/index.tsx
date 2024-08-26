@@ -1,7 +1,8 @@
 import { Paragraph, YStack } from '@t4/ui'
 import { GetServerSideProps } from 'next'
 
-export const runtime = 'experimental-edge'
+
+export const runtime = "edge";
 
 export const getServerSideProps = (async () => {
   return { props: { content: 'This content is sent from the server' } }
