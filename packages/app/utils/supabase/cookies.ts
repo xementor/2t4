@@ -16,9 +16,9 @@ export function getCookieValue(cookieName: string): string | undefined {
     if (cookie) {
       const [key, value] = cookie.split('=')
       if (key && value) {
-      if(key === cookieName) {
-        return decodeURIComponent(value)
-      }
+        if (key === cookieName) {
+          return decodeURIComponent(value)
+        }
       }
     }
   }
