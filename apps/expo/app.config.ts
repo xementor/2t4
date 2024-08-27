@@ -4,7 +4,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   extra: {
     eas: {
-      projectId: process.env.EXPO_PUBLIC_EAS_PROJECT_ID,
+      projectId: 'f6dd8390-8d42-4355-83d2-9e293ceeeacc',
     },
   },
   owner: process.env.EXPO_PUBLIC_EAS_OWNER,
