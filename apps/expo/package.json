@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "ios": "expo run:ios",
+    "start": "expo start",
     "android": "expo run:android",
     "dev": "expo start --dev-client",
     "dev:prod": "expo start --no-dev --minify",

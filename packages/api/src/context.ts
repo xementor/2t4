@@ -20,6 +20,8 @@ export const createContext = async (
 ): Promise<ApiContextProps> => {
   const db = createDb(d1)
 
+  console.log(opts.req.headers)
+
   async function getUser() {
     const sessionToken = opts.req.headers.get('authorization')?.split(' ')[1]
 

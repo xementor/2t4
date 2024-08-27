@@ -33,12 +33,12 @@
         "completionFilters": {
           "showColorTokens": true,
           "showTrueTokens": true,
-          "custom": {
-          }
+          "custom": {}
         }
       }
     ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "types": ["@cloudflare/workers-types/2024-07-29"]
 }
