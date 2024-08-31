@@ -14,6 +14,7 @@ export function MainInputPage() {
   const [editingMessage, setEditingMessage] = useState<Message | undefined>()
   const scrollViewRef = useRef<RNScrollView>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     scrollToBottom()
   }, [messages])
@@ -63,7 +64,7 @@ export function MainInputPage() {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
       <YStack f={1} p='$4' space>

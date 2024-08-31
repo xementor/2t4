@@ -48,6 +48,10 @@ export function HomeScreen() {
     href: '/params/tim',
   })
 
+  const tabsLink = useLink({
+    href: '/(tabs)',
+  })
+
   return (
     <ScrollView>
       <YStack flex={1} jc='center' ai='center' p='$4' space='$4'>
@@ -87,6 +91,9 @@ export function HomeScreen() {
         <YStack space='$2'>
           <Button {...virtualizedListLink} space='$2'>
             Virtualized List
+          </Button>
+          <Button {...tabsLink} space='$2'>
+            Tabs
           </Button>
           <Button {...dataFetchingLink} space='$2'>
             Fetching Data

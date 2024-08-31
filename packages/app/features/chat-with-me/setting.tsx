@@ -6,9 +6,9 @@ export function SettingsPage() {
   return (
     <ScrollView>
       <YStack f={1} p='$4' space>
-        <Text fontSize='$6' fontWeight='bold'>
+        {/* <Text fontSize='$6' fontWeight='bold'>
           Settings
-        </Text>
+        </Text> */}
 
         <YStack space='$4'>
           <Text fontSize='$5' fontWeight='bold'>

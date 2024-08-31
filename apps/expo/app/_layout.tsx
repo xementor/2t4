@@ -34,7 +34,9 @@ export default function RootLayout() {
 
   return (
     <Provider initialSession={null}>
-      <Stack />
+      <Stack>
+        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+      </Stack>
     </Provider>
   )
 }
