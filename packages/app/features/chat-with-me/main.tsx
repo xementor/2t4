@@ -83,9 +83,12 @@ export function MainInputPage() {
                   </Text>
                 ))}
               </XStack>
-              <Button size='$2' mt='$2' onPress={() => handleEdit(index)}>
+              {/* <Button size='$2' mt='$2' onPress={() => handleEdit(index)}>
                 Edit
-              </Button>
+              </Button> */}
+              <Text mt='$-4' textAlign='right' fontSize={12}>
+                {new Date(msg.timestamp).toLocaleTimeString()}
+              </Text>
             </Card>
           ))}
         </ScrollView>
