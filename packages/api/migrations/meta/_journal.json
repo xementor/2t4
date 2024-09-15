@@ -29,6 +29,20 @@
       "when": 1699079033736,
       "tag": "0003_hot_ultragirl",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1726253591859,
+      "tag": "0004_military_baron_strucker",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1726409836606,
+      "tag": "0005_chunky_nova",
+      "breakpoints": true
     }
   ]
 }

@@ -37,10 +37,7 @@ export const secureCookieOptions = {
 }
 
 export const getToken = (): string | undefined => {
-  // console.log('get Token', document.cookie)
-  console.log(DEFAULT_COOKIE_OPTIONS, 'vong cong')
   let token = getCookieValue(AUTH_TOKEN_COOKIE_NAME)
-  console.log(token, token)
   if (token !== undefined) {
     const parse = JSON.parse(token)
     if (Array.isArray(parse) && parse.length > 0) {
