@@ -1,6 +1,9 @@
+import { trpc } from 'app/utils/trpc'
 import React, { useState, useRef, useEffect } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView as RNScrollView } from 'react-native'
 import { YStack, XStack, Input, Button, Text, ScrollView, Card } from 'tamagui'
+
+import { Check, CheckCheck, Loader } from '@tamagui/lucide-icons'
 
 type Message = {
   text: string
@@ -74,22 +77,7 @@ export function MainInputPage() {
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}
         >
           {messages.map((msg, index) => (
-            <Card key={msg.timestamp} mb='$2' p='$3'>
-              <Text>{msg.text}</Text>
-              <XStack mt='$2' space>
-                {msg.tags.map((tag, i) => (
-                  <Text key={`${tag}-${i}`} color='$blue10'>
-                    {tag}
-                  </Text>
-                ))}
-              </XStack>
-              {/* <Button size='$2' mt='$2' onPress={() => handleEdit(index)}>
-                Edit
-              </Button> */}
-              <Text mt='$-4' textAlign='right' fontSize={12}>
-                {new Date(msg.timestamp).toLocaleTimeString()}
-              </Text>
-            </Card>
+            <Message key={`${index}`} msg={msg} />
           ))}
         </ScrollView>
         <XStack space>
@@ -109,5 +97,38 @@ export function MainInputPage() {
         </XStack>
       </YStack>
     </KeyboardAvoidingView>
+  )
+}
+function Message({
+  msg,
+}: {
+  msg: Message
+}): React.JSX.Element {
+  const addM = trpc.note.add.useMutation()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    addM.mutate({ content: msg.text })
+  }, [])
+
+  return (
+    <Card key={msg.timestamp} mb='$2' p='$3'>
+      <Text>{msg.text}</Text>
+      <XStack mt='$2' space>
+        {msg.tags.map((tag, i) => (
+          <Text key={`${tag}-${i}`} color='$blue10'>
+            {tag}
+          </Text>
+        ))}
+      </XStack>
+
+      <XStack jc='flex-end' ai='flex-end' mt='$-4'>
+        {addM.isLoading && <Loader size='$1' />}
+        <Text textAlign='right' mr='$2' fontSize={12}>
+          {new Date(msg.timestamp).toLocaleTimeString()}
+        </Text>
+        {addM.isSuccess ? <CheckCheck size='$1' /> : <Check size='$1' />}
+      </XStack>
+    </Card>
   )
 }
