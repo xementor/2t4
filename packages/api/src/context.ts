@@ -1,24 +1,19 @@
 import { type inferAsyncReturnType } from '@trpc/server'
 import { type FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 import jwt from '@tsndr/cloudflare-worker-jwt'
-import { DrizzleD1Database } from 'drizzle-orm/d1'
 import { createDb } from './db/client'
 
 interface User {
   id: string
 }
 
-interface ApiContextProps {
-  user: User | null
-  db: DrizzleD1Database
-}
-
 export const createContext = async (
   d1: D1Database,
   JWT_VERIFICATION_KEY: string,
+  SUPABASE_DB_URL: string,
   opts: FetchCreateContextFnOptions
-): Promise<ApiContextProps> => {
-  const db = createDb(d1)
+) => {
+  const db = createDb(SUPABASE_DB_URL)
 
   console.log(opts.req.headers)
 

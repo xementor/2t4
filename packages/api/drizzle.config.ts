@@ -1,13 +1,13 @@
 import type { Config } from 'drizzle-kit'
+// dotenv.config({ path: path.join(__dirname, '..', '..', '.env') })
+
+// console.log(process.env.SUPABASE_DB_URL)
 
 export default {
   schema: './src/db/schema.ts',
   out: './migrations',
-  driver: 'd1',
+  dialect: 'postgresql',
   dbCredentials: {
-    wranglerConfigPath: 'wrangler.toml',
-    dbName: '2t4',
+    url: process.env.SUPABASE_DB_URL ?? '',
   },
-  verbose: false,
-  strict: true,
 } satisfies Config
