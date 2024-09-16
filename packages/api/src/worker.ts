@@ -8,6 +8,7 @@ type Bindings = {
   DB: D1Database
   JWT_VERIFICATION_KEY: string
   APP_URL: string
+  SUPABASE_DB_URL: string
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
@@ -32,7 +33,7 @@ app.use('/trpc/*', async (c, next) => {
   return await trpcServer({
     router: appRouter,
     createContext: async (opts) => {
-      return await createContext(c.env.DB, c.env.JWT_VERIFICATION_KEY, opts)
+      return await createContext(c.env.DB, c.env.JWT_VERIFICATION_KEY, c.env.SUPABASE_DB_URL, opts)
     },
   })(c, next)
 })

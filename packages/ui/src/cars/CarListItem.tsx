@@ -20,7 +20,7 @@ export const CarListItem = (item: Car): React.ReactElement => {
           {`${item.make} ${item.model}`}
         </Paragraph>
         <Paragraph paddingLeft='$3' fontSize={16} opacity={0.6}>
-          {item.color} - {item.year} - {formatNumber(item.mileage)} miles -{' '}
+          {item.color} - {item.year} - {formatNumber(Number(item.mileage))} miles -{' '}
           {formatPrice(item.price)}
         </Paragraph>
       </YStack>

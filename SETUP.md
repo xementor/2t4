@@ -36,3 +36,7 @@ so fixing appurl and apiurl is really important.
 
 - this need to configure appId
 - setting secret from .env.local is very important, without that if i build eas build from my machine, it don't get the .env file as this is ignored in github. so i've to first `eas secret:push` , to push all the .env.local to project level secret.
+
+
+## In Bluestack
+`export ANDROID_ADB_SERVER_PORT=5555`
