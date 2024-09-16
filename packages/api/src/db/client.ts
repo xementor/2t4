@@ -12,8 +12,10 @@ const globalForDb = globalThis as unknown as {
 }
 
 export const createDb = (DB_URL: string) => {
-  const conn = globalForDb.conn ?? postgres(DB_URL)
-  if (process.env.NODE_ENV !== 'production') globalForDb.conn = conn
+  // const conn = globalForDb.conn ?? postgres(DB_URL)
+  // if (process.env.NODE_ENV !== 'production') globalForDb.conn = conn
+
+  const conn = postgres(DB_URL)
 
   const db = drizzle(conn, { schema })
 

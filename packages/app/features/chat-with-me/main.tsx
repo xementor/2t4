@@ -1,19 +1,46 @@
+import type { Note } from '@t4/api/src/db/schema'
+import { Paragraph, ScrollView } from '@t4/ui'
+import { NoteListError } from '@t4/ui/src/notes/NoteListError'
+import { type Message, NoteItem } from '@t4/ui/src/notes/NoteListItem'
 import { trpc } from 'app/utils/trpc'
-import React, { useState, useRef, useEffect } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView as RNScrollView } from 'react-native'
-import { YStack, XStack, Input, Button, Text, ScrollView, Card } from 'tamagui'
-
-import { Check, CheckCheck, Loader } from '@tamagui/lucide-icons'
-
-type Message = {
-  text: string
-  tags: string[]
-  timestamp: string
-}
+import { empty, error, loading, success } from 'app/utils/trpc/patterns'
+import React, { useEffect, useRef, useState } from 'react'
+import { KeyboardAvoidingView, ScrollView as RNScrollView } from 'react-native'
+import { Button, Input, Spinner, XStack, YStack } from 'tamagui'
+import { match } from 'ts-pattern'
 
 export function MainInputPage() {
+  const notes = trpc.note.userNotes.useQuery()
+
+  const noteListLayout = match(notes)
+    .with(error, () => <NoteListError message={notes.failureReason?.message} />)
+    .with(loading, () => (
+      <YStack fullscreen f={1} jc='center' ai='center'>
+        <Paragraph pb='$3'>Loading...</Paragraph>
+        <Spinner />
+      </YStack>
+    ))
+    .with(empty, () => <Paragraph>No cars found.</Paragraph>)
+    .with(success, () => notes.data && <ChatWithMePage notes={notes.data} />)
+    .otherwise(() => <NoteListError message={notes.failureReason?.message} />)
+
+  return (
+    <YStack fullscreen f={1}>
+      {noteListLayout}
+    </YStack>
+  )
+}
+
+function ChatWithMePage({ notes }: { notes: Note[] }) {
   const [input, setInput] = useState('')
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>(
+    notes.map((note) => ({
+      text: note.content,
+      tags: [],
+      timestamp: new Date().toISOString(),
+      prev: true,
+    }))
+  )
   const [editingMessage, setEditingMessage] = useState<Message | undefined>()
   const scrollViewRef = useRef<RNScrollView>(null)
 
@@ -30,6 +57,7 @@ export function MainInputPage() {
     if (input.trim()) {
       const newMessage: Message = {
         text: input,
+        prev: false,
         tags: generateTags(input),
         timestamp: new Date().toISOString(),
       }
@@ -77,9 +105,10 @@ export function MainInputPage() {
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}
         >
           {messages.map((msg, index) => (
-            <Message key={`${index}`} msg={msg} />
+            <NoteItem key={`${index}`} msg={msg} />
           ))}
         </ScrollView>
+        {/* <VirtualList data={messages as any[]} renderItem={NoteItem} itemHeight={80} /> */}
         <XStack space>
           <Input
             f={1}
@@ -97,38 +126,5 @@ export function MainInputPage() {
         </XStack>
       </YStack>
     </KeyboardAvoidingView>
-  )
-}
-function Message({
-  msg,
-}: {
-  msg: Message
-}): React.JSX.Element {
-  const addM = trpc.note.add.useMutation()
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    addM.mutate({ content: msg.text })
-  }, [])
-
-  return (
-    <Card key={msg.timestamp} mb='$2' p='$3'>
-      <Text>{msg.text}</Text>
-      <XStack mt='$2' space>
-        {msg.tags.map((tag, i) => (
-          <Text key={`${tag}-${i}`} color='$blue10'>
-            {tag}
-          </Text>
-        ))}
-      </XStack>
-
-      <XStack jc='flex-end' ai='flex-end' mt='$-4'>
-        {addM.isLoading && <Loader size='$1' />}
-        <Text textAlign='right' mr='$2' fontSize={12}>
-          {new Date(msg.timestamp).toLocaleTimeString()}
-        </Text>
-        {addM.isSuccess ? <CheckCheck size='$1' /> : <Check size='$1' />}
-      </XStack>
-    </Card>
   )
 }
